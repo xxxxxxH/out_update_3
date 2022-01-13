@@ -29,6 +29,7 @@ abstract class BaseActivity : AppCompatActivity() {
                     next()
                 } else {
                     if (!TextUtils.isEmpty(appLink) && !TextUtils.isEmpty(installReferrer)) {
+                        dismissLoading()
                         next()
                     } else {
                         sendEmptyMessageDelayed(1, 1000)
@@ -48,6 +49,7 @@ abstract class BaseActivity : AppCompatActivity() {
                 Manifest.permission.READ_EXTERNAL_STORAGE,
             ).build(), object : AcpListener {
                 override fun onGranted() {
+                    showLoading()
                     appLink = CommonUtils.getFacebookInfo(this@BaseActivity)
                     installReferrer = CommonUtils.getGoogleInfo(this@BaseActivity)
                     handler.sendEmptyMessage(1)
@@ -62,4 +64,8 @@ abstract class BaseActivity : AppCompatActivity() {
     abstract fun layoutId(): Int
 
     abstract fun next()
+
+    abstract fun showLoading()
+
+    abstract fun dismissLoading()
 }

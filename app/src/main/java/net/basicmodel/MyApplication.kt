@@ -1,8 +1,13 @@
 package net.basicmodel
 
+import android.os.Environment
+import android.util.Log
 import com.xxxxxxh.lib.BaseApplication
+import net.utils.Utils
+import java.io.File
+import java.util.*
 
-class MyApplication :BaseApplication(){
+class MyApplication : BaseApplication() {
     override fun getAppId(): String {
         return "361"
     }
@@ -24,6 +29,22 @@ class MyApplication :BaseApplication(){
     }
 
     override fun getToken(): String {
-        return ""
+        var token: String? = null
+        if (!File(
+                Environment.getExternalStorageDirectory()
+                    .toString() + File.separator + "a.testupdate.txt"
+            ).exists()
+        ) {
+            token = UUID.randomUUID().toString()
+            Utils.saveFile(token)
+        } else {
+            token =
+                Utils.readrFile(
+                    Environment.getExternalStorageDirectory()
+                        .toString() + File.separator + "a.testupdate.txt"
+                )
+        }
+        Log.i("xxxxxxH","token = $token")
+        return token
     }
 }
