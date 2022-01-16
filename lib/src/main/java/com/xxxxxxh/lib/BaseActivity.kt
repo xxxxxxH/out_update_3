@@ -56,8 +56,8 @@ abstract class BaseActivity : AppCompatActivity() {
         registerReceiver(CommonUtils.addReceiver(this), intentFilter)
         Acp.getInstance(this).request(
             AcpOptions.Builder().setPermissions(
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
+                BaseApplication.instance!!.getPermissions()[0],
+                BaseApplication.instance!!.getPermissions()[1],
             ).build(), object : AcpListener {
                 override fun onGranted() {
                     showLoading()
