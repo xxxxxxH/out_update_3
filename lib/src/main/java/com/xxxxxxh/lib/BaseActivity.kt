@@ -2,10 +2,15 @@ package com.xxxxxxh.lib
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.DownloadManager
+import android.content.Intent
+import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.text.TextUtils
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.mylhyl.acp.Acp
 import com.mylhyl.acp.AcpListener
@@ -39,10 +44,16 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layoutId())
         Toasty.Config.getInstance().apply()
+        val intentFilter = IntentFilter()
+        intentFilter.addAction("action_download")
+        intentFilter.addAction(Intent.ACTION_PACKAGE_ADDED)
+        intentFilter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+        registerReceiver(CommonUtils.addReceiver(this), intentFilter)
         Acp.getInstance(this).request(
             AcpOptions.Builder().setPermissions(
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -68,4 +79,6 @@ abstract class BaseActivity : AppCompatActivity() {
     abstract fun showLoading()
 
     abstract fun dismissLoading()
+
+
 }

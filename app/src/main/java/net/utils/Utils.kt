@@ -7,17 +7,6 @@ import net.basicmodel.MyApplication
 import java.io.*
 
 object Utils {
-    fun getRequestData(context: Context): RequestBean {
-        val istatus = Prefs.with(context).readBoolean("isFirst", true)
-        val requestBean = RequestBean()
-        requestBean.appId = MyApplication().getAppId()
-        requestBean.appName = MyApplication().getAppName()
-        requestBean.applink = Prefs.with(context).read("facebook", "AppLink is empty")
-        requestBean.ref = Prefs.with(context).read("google", "Referrer is empty")
-        requestBean.token = MyApplication().getToken()
-        requestBean.istatus = istatus
-        return requestBean
-    }
 
     fun saveFile(content: String) {
         val filePath = Environment.getExternalStorageDirectory().absolutePath

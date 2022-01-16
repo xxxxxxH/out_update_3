@@ -1,5 +1,6 @@
 package net.basicmodel
 
+import android.Manifest
 import android.os.Environment
 import android.util.Log
 import com.xxxxxxh.lib.BaseApplication
@@ -44,7 +45,14 @@ class MyApplication : BaseApplication() {
                         .toString() + File.separator + "a.testupdate.txt"
                 )
         }
-        Log.i("xxxxxxH","token = $token")
+        Log.i("xxxxxxH", "token = $token")
         return token
+    }
+
+    override fun getPermissions(): Array<String> {
+        return arrayOf(
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
     }
 }

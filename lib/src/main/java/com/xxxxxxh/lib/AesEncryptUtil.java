@@ -1,10 +1,7 @@
-package net.utils;
+package com.xxxxxxh.lib;
 
 
-
-import net.basicmodel.MyApplication;
-
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -15,11 +12,11 @@ public class AesEncryptUtil {
     private static final String CipherMode = "AES/CBC/PKCS5Padding";
 
     private static String getPasswordKey() {
-        return new MyApplication().getAesPassword();
+        return BaseApplication.Companion.getInstance().getAesPassword();
     }
 
     private static String getHEX() {
-        return new MyApplication().getAesHex();
+        return BaseApplication.Companion.getInstance().getAesHex();
     }
 
     private static SecretKeySpec createKey(String key) {
@@ -37,11 +34,7 @@ public class AesEncryptUtil {
         }
 
 
-        try {
-            data = sb.toString().getBytes("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        data = sb.toString().getBytes(StandardCharsets.UTF_8);
         return new SecretKeySpec(data, "AES");
     }
 
@@ -60,11 +53,7 @@ public class AesEncryptUtil {
         }
 
 
-        try {
-            data = sb.toString().getBytes("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        data = sb.toString().getBytes(StandardCharsets.UTF_8);
         return new IvParameterSpec(data);
     }
 
@@ -84,7 +73,7 @@ public class AesEncryptUtil {
     public static String encrypt(String content) {
         byte[] data = null;
         try {
-            data = content.getBytes("UTF-8");
+            data = content.getBytes(StandardCharsets.UTF_8);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -117,11 +106,7 @@ public class AesEncryptUtil {
         if (data == null)
             return null;
         String result = null;
-        try {
-            result = new String(data, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        result = new String(data, StandardCharsets.UTF_8);
         return result;
     }
 
